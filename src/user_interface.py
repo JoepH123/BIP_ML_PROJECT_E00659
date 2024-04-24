@@ -4,7 +4,7 @@ import dash
 from dash import dcc, html, dash_table, Input, Output, State
 import pandas as pd
 import dash_bootstrap_components as dbc
-from src.ui_backend import show_correct_data, run_prediction_process
+from ui_backend import show_correct_data, run_prediction_process
 
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SOLAR])
