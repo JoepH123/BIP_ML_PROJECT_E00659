@@ -12,9 +12,10 @@ Give a good comparison of the different models: by looking at all the results, u
 
 We ended up implementing this final model decision tree into a usable user interface. 
 
-Furthermore, in order to run this user interface, we had to create some assets. To create these, the ui_asset_creator.py file can be used.
+Furthermore, to run this user interface, we had to create some assets. To create these, the ui_asset_creator.py file can be used.
 
 # [Section 1] Introduction
+Our project was developed to produce a model that predicts exemption VAT codes for each invoice line. Particularly using the IVAm field in the dataset. To determine the best model we pursued several avenues and picked the relevant criteria. We also implemented a user-friendly interface to facilitate easy interactions with the model in dhasboard form. 
 
 # [Section 2] Methods
 
