@@ -40,7 +40,7 @@ Does the presence of values in a column with many NaNs provide substantial predi
 Is the column with few NaNs valuable enough to apply a data imputation technique?
 Concluded columns (>50%) to be **eliminated**. 
 
-   Qualitatively, we assumed that the (6) columns specifically mentioned in the given dataset description were important inputs and must be utilized in the model. All 6 columns were perfectly clean and required no imputation. For invoice information, Columns Description and Amount (not within the dataset 6) were also determined to be essential, which fall under (>5%) and  no missing values respectively. No further adjustments to be made.
+Qualitatively, we assumed that the (6) columns specifically mentioned in the given dataset description were important inputs and must be utilized in the model. All 6 columns were perfectly clean and required no imputation. For invoice information, Columns Description and Amount (not within the dataset 6) were also determined to be essential, which fall under (>5%) and  no missing values respectively. No further adjustments to be made.
 
 
 2. **Proposed Idea**
