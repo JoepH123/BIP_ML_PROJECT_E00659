@@ -46,21 +46,24 @@ Qualitatively, we assumed that the (6) columns specifically mentioned in the giv
 2. **Proposed Idea**
 We explore the performance of machine learning models on high-dimensional data. Specifically, we compare the efficacy of a neural network against that of a random forest and a decision tree. The primary challenge addressed is the management of high dimensionality resulting from:
 
-     a) Text vectorization, which transforms textual data into a high-dimensional space.
-     b) The creation of dummy variables for categorical features, which significantly increases the feature count with numerous categories.
+   a) Text vectorization, which transforms textual data into a high-dimensional space.
+
+   b) The creation of dummy variables for categorical features, which significantly increases the feature count with numerous categories.
   
-3. **Design Decisions and Algorithm Selection**
+4. **Design Decisions and Algorithm Selection**
 Dimensionality Reduction: To manage the high dimensionality, we employ Truncated Singular Value Decomposition (TruncatedSVD). This technique reduces the feature space to a more manageable size while attempting to preserve the variance in the data. This reduction is crucial for improving model training times and avoiding overfitting.
 
-4. **Model Selection**
+5. **Model Selection**
 Neural Network: We hypothesized that a neural network, due to its ability to model complex patterns, would be well-suited for high-dimensional data, even after dimensionality reduction.
 Random Forest: Serves as a benchmark due to its robustness and effectiveness in handling numerous features without significant preprocessing. It's also less likely to overfit compared to simpler models.
 Decision Tree: Investigated as a simpler alternative to assess if complexity in model architecture translates to significantly better performance.
 
-5. **Training Overview**
+6. **Training Overview**
 Models are trained using the same subset of data to ensure a fair comparison. The training process for each model involves:
      a) Utilizing a standardized pipeline of preprocessing - including the application of TruncatedSVD - followed by model fitting.
+   
      b) Tuning hyperparameters specific to each model type to optimize performance.
+   
      c) Evaluating using common metrics such as accuracy, precision, recall, and F1-score to gauge each model's effectiveness.
   
 # [Section 3] Experimental Design
