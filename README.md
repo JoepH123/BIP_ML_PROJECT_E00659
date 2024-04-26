@@ -1,55 +1,132 @@
+missing: 
+section 2 flow chart
+section 4 placeholder figure
+
 # BIP-ML-project-E00659
 Alysia Yoon E04249
-
 Joep Hillenaar E00659
 
 
-Project for the Machine Learning course at Luiss for BIP. This project centers around the development of a model that accurately predicts VAT Exemption codes.
-
-Describe what is in the 4 notebooks, which discuss all the steps we took and the progress that we made
-
-Give a good comparison of the different models: by looking at all the results, using the simplest model --> decision tree with the smallest dataset is most logical. Easily understandable. You can even plot the decision tree (however, it is massive).
-
-We ended up implementing this final model decision tree into a usable user interface. 
-
-Furthermore, to run this user interface, we had to create some assets. To create these, the ui_asset_creator.py file can be used.
-
 # [Section 1] Introduction
-Our project was developed to produce a model that predicts exemption VAT codes for each invoice line. Particularly using the IVAm field in the dataset. To determine the best model we pursued several avenues and picked the relevant criteria. We also implemented a user-friendly interface to facilitate easy interactions with the model in dashboard form. 
+Our project was developed to produce a model that predicts exemption VAT codes for each invoice line. Particularly using the IVAm field in the dataset. We pursued several avenues to determine the best model and picked the relevant criteria. We also implemented a user-friendly interface to facilitate easy interactions with the model in dashboard form. 
+
+Given resources: 
+BIP x Tech Presentation
+BIP x Tech - Dataset Description 
+BIP x Tech - Project: IVA
+BIP X Tech - xlsx Dataset
 
 # [Section 2] Methods
-Proposed ideas: Features, algorithm(s), training overview, design choices
 
-A reader should be able to recreate your environment (e.g., conda list,
-conda envexport, etc
+1. **Dataset Analysis**
+   Our first step was to perform an initial explorative data analysis (EDA) procedure. We looked for missing values and anomalies to fully grasp the workability of the given dataset. Quantitatively, we were able to determine which columns were imputable and unusable due to the level of NaN's. This was done through:
+   
+   a) Deleting all rows for which IvaM is missing
+   b) Calculating number of NaNs per column
+   c) Calculating percentage of NaNs per column
+   d) Combine both into a DataFrame for a cleaner display for simpler analysis
+   
+Three categories emerged from this step.
+Columns with no missing values
+Columns with a small percentage of missing values (<5%)
+Columns with a large percentage of missing values (>50%)
+**Note no cases between 2. and 3.**
 
-A flowchart illustrating the steps in your machine-learning system
+For columns with no missing value, we **kept** them all to uphold data integrity
+For columns (>5%), imputation is promising. All were categorical data types, and we **imputed** with mode.
+For columns (>50%), imputation was deemed difficult.
+Before deletion, we discussed two questions:
+Does the presence of values in a column with many NaNs provide substantial predictive power? (This way we could use empty values)
+Is the column with few NaNs valuable enough to apply a data imputation technique?
+Concluded columns (>50%) to be **eliminated**. 
 
-•	Comparing a neural network approach making use of high dimensionality to a random forest with high dimensionality
-o	Using all features  however number of features becomes very high because of two reasons:
-	the text to vector (high dimensional representation)
-	the explosion of the number of features through the creation of dummy features for the categorical variables.
-•	If you have A, B, C, in a variable, the you have to make var_B, and var_C dummy variables. This way the number increases heavily if you have high number of categories
-	For this reason we use TruncatedSVD to limit the number of features, we summarize high dimensionality into lower dimensionality.
-•	Comparing neural network, random forest and decision tree on lower dimensionality. 
-•	Using random forest as benchmark for performance of the neural network
-•	When realizing random forest wasn’t that much better, looked at if we can reach same results with even simpler model (decision tree).
+   Qualitatively, we assumed that the (6) columns specifically mentioned in the given dataset description were important inputs and must be utilized in the model. All 6 columns were perfectly clean and required no imputation. For invoice information, Columns Description and Amount (not within the dataset 6) were also determined to be essential, which fall under (>5%) and  no missing values respectively. No further adjustments to be made.
 
 
+2. **Proposed Idea**
+We explore the performance of machine learning models on high-dimensional data. Specifically, we compare the efficacy of a neural network against that of a random forest and a decision tree. The primary challenge addressed is the management of high dimensionality resulting from:
 
+  a) Text vectorization, which transforms textual data into a high-dimensional space.
+  b) The creation of dummy variables for categorical features, which significantly increases the feature count with numerous categories.
+  
+3. **Design Decisions and Algorithm Selection**
+Dimensionality Reduction: To manage the high dimensionality, we employ Truncated Singular Value Decomposition (TruncatedSVD). This technique reduces the feature space to a more manageable size while attempting to preserve the variance in the data. This reduction is crucial for improving model training times and avoiding overfitting.
 
+4. **Model Selection**
+Neural Network: We hypothesized that a neural network, due to its ability to model complex patterns, would be well-suited for high-dimensional data, even after dimensionality reduction.
+Random Forest: Serves as a benchmark due to its robustness and effectiveness in handling numerous features without significant preprocessing. It's also less likely to overfit compared to simpler models.
+Decision Tree: Investigated as a simpler alternative to assess if complexity in model architecture translates to significantly better performance.
+
+5. **Training Overview**
+Models are trained using the same subset of data to ensure a fair comparison. The training process for each model involves:
+  a) Utilizing a standardized pipeline of preprocessing - including the application of TruncatedSVD - followed by model fitting.
+  b) Tuning hyperparameters specific to each model type to optimize performance.
+  c) Evaluating using common metrics such as accuracy, precision, recall, and F1-score to gauge each model's effectiveness.
+  
 # [Section 3] Experimental Design
-Any experiments you conducted to demonstrate/validate the target contribution(s) of your project; indicate the
-following for each experiment:
-• The main purpose: 1-2 sentence high-level explanation
-• Baseline(s): describe the method(s) that you used to compare your work to.
-• Evaluation Metrics(s): which ones did you use and why?
+Comparison of a total of 5 models of which three are text-to-vector methods.
+
+**Experiment 1: Model Performance in High-Dimensional Space**
+Main Purpose - To assess and compare the performance of neural networks (NN) and random forests (RF) in a high-dimensional feature space.
+
+Baselines
+The random forest model served as a baseline, known for handling high-dimensional spaces effectively.
+The neural network model was tested against this baseline to determine if its higher complexity provided any significant performance benefit in high-dimensional data.
+
+Evaluation Metrics
+Accuracy: Indicates the overall rate of correct predictions made by the model.
+F1 Score: a single measure that combines precision and recall. Useful when you have classes of different sizes and you want to ensure your model is both accurate and doesn't miss a significant number of instances. 
+Precision and Recall: Additional metrics were considered to understand the trade-offs each model makes between false positives and false negatives.
+Confusion Matrix: To gain deeper insights into the type and frequency of classification errors each model makes.
+
+**Experiment 2: Text-to-Vector Transformation Methods**
+Main Purpose - To compare the effectiveness of different text-to-vector transformation methods on model performance.
+
+Baselines
+English TFIDF used as a primary baseline due to its widespread use and efficacy.
+Italian TFIDF used to determine the impact of language-specific vectorization on model performance.
+Transformer embeddings were included to determine advancements in natural language processing and their effect on the model's ability to understand and classify textual data.
+
+Evaluation Metrics
+Accuracy: Measure for how well each text-to-vector method contributed to correct classifications.
+F1 Score: Same definition as previous experiment
+Confusion Matrix: Same definition as previous experiment
+
+**Experiment 3: Model Comparison in Low-Dimensional Space**
+Main Purpose - To investigate how neural networks (NN), random forests (RF), and decision trees (DT) perform on a lower-dimensional dataset, and to determine if a simpler model like DT could outperform more complex models.
+
+Baselines
+Random Forest and Decision Tree models were used as baselines due to their simplicity and interpretability.
+The neural network was evaluated against these baselines to see if the dimensionality reduction affected the more complex model disproportionately.
+
+Evaluation Metrics
+Accuracy: Provides a general sense of model performance with reduced feature sets.
+F1 Score: Helps evaluate the precision-recall balance in a more condensed feature space.
+Precision and Recall: How often the model is right when it predicts something and how good it is at catching what it should. This is useful when fewer features change the way the model acts.
+Confusion Matrix: Aids in understanding the areas where each model excels or fails, to guide future feature selection.
+
 
 # [Section 4] Results
-• Main finding(s): report your results and what you might conclude from your work.
-• Include at least one placeholder figure and/or table for communicating your findings.
-• All the figures containing results should be generated from the code.
+Our experiments led to several notable findings:
+
+Model Performance:
+Random Forest (RF) and Decision Tree (DT) models yielded similar results to the Neural Network (NN) when applied to the full feature set.
+When using a reduced feature set, both RF and DT outperformed the NN, suggesting that these models are more robust to feature set reduction.
+The NN's performance dipped more significantly than RF and DT in lower-dimensional spaces, indicating a possible over-reliance on the availability of high-dimensional data.
+
+Feature Reduction:
+The experiments demonstrated that both RF and DT maintain commendable performance despite a significant reduction in the number of features. This reinforces the notion that these models can effectively capture the underlying patterns in the data with fewer features (utilizing less computational power).
+
 
 # [Section 5] Conclusions
-Summarize in one paragraph the take-away point from your work.
-• Include one paragraph to explain what questions may not be fully answered by your work as well as natural next steps for this direction of future work.
+Our project concludes the RF and DT models are superior in contexts with fewer features.
+Given the comparable performance between RF and DT, along with the added advantage of simplicity and interpretability, **DT emerges as the preferred model.** The NN model does not demonstrate a clear advantage in the reduced feature space setting, reinforcing the suitability of more traditional, interpretable models for such tasks. The data and task fit better with a rule-based approach because the additional columns used in the dataset allow for creating an accurate model using deterministic rules. Random Forests (RF) and Decision Trees (DT) are inherently more aligned with a rule-based methodology. They function by creating decision rules that split the data based on feature values, which is particularly effective when there's a clear and logical structure to the data that can be captured with such rules. Thus the DT model is concluded to be the best-fit choice model for the task. 
+
+
+
+
+
+
+
+
+
