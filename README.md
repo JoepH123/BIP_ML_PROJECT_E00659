@@ -60,6 +60,7 @@ Decision Tree: Investigated as a simpler alternative to assess if complexity in 
 
 6. **Training Overview**
 Models are trained using the same subset of data to ensure a fair comparison. The training process for each model involves:
+
      a) Utilizing a standardized pipeline of preprocessing - including the application of TruncatedSVD - followed by model fitting.
    
      b) Tuning hyperparameters specific to each model type to optimize performance.
