@@ -25,6 +25,18 @@ conda envexport, etc
 
 A flowchart illustrating the steps in your machine-learning system
 
+•	Comparing a neural network approach making use of high dimensionality to a random forest with high dimensionality
+o	Using all features  however number of features becomes very high because of two reasons:
+	the text to vector (high dimensional representation)
+	the explosion of the number of features through the creation of dummy features for the categorical variables.
+•	If you have A, B, C, in a variable, the you have to make var_B, and var_C dummy variables. This way the number increases heavily if you have high number of categories
+	For this reason we use TruncatedSVD to limit the number of features, we summarize high dimensionality into lower dimensionality.
+•	Comparing neural network, random forest and decision tree on lower dimensionality. 
+•	Using random forest as benchmark for performance of the neural network
+•	When realizing random forest wasn’t that much better, looked at if we can reach same results with even simpler model (decision tree).
+
+
+
 
 # [Section 3] Experimental Design
 Any experiments you conducted to demonstrate/validate the target contribution(s) of your project; indicate the
