@@ -46,9 +46,8 @@ Qualitatively, we assumed that the (6) columns specifically mentioned in the giv
 2. **Proposed Idea**
 We explore the performance of machine learning models on high-dimensional data. Specifically, we compare the efficacy of a neural network against that of a random forest and a decision tree. The primary challenge addressed is the management of high dimensionality resulting from:
 
-  a) Text vectorization, which transforms textual data into a high-dimensional space.
-  
-  b) The creation of dummy variables for categorical features, which significantly increases the feature count with numerous categories.
+     a) Text vectorization, which transforms textual data into a high-dimensional space.
+     b) The creation of dummy variables for categorical features, which significantly increases the feature count with numerous categories.
   
 3. **Design Decisions and Algorithm Selection**
 Dimensionality Reduction: To manage the high dimensionality, we employ Truncated Singular Value Decomposition (TruncatedSVD). This technique reduces the feature space to a more manageable size while attempting to preserve the variance in the data. This reduction is crucial for improving model training times and avoiding overfitting.
@@ -60,9 +59,9 @@ Decision Tree: Investigated as a simpler alternative to assess if complexity in 
 
 5. **Training Overview**
 Models are trained using the same subset of data to ensure a fair comparison. The training process for each model involves:
-  a) Utilizing a standardized pipeline of preprocessing - including the application of TruncatedSVD - followed by model fitting.
-  b) Tuning hyperparameters specific to each model type to optimize performance.
-  c) Evaluating using common metrics such as accuracy, precision, recall, and F1-score to gauge each model's effectiveness.
+     a) Utilizing a standardized pipeline of preprocessing - including the application of TruncatedSVD - followed by model fitting.
+     b) Tuning hyperparameters specific to each model type to optimize performance.
+     c) Evaluating using common metrics such as accuracy, precision, recall, and F1-score to gauge each model's effectiveness.
   
 # [Section 3] Experimental Design
 Comparison of a total of 5 models of which three are text-to-vector methods.
