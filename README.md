@@ -47,6 +47,7 @@ Qualitatively, we assumed that the (6) columns specifically mentioned in the giv
 We explore the performance of machine learning models on high-dimensional data. Specifically, we compare the efficacy of a neural network against that of a random forest and a decision tree. The primary challenge addressed is the management of high dimensionality resulting from:
 
   a) Text vectorization, which transforms textual data into a high-dimensional space.
+  
   b) The creation of dummy variables for categorical features, which significantly increases the feature count with numerous categories.
   
 3. **Design Decisions and Algorithm Selection**
