@@ -11,10 +11,10 @@ Joep Hillenaar E00659
 Our project was developed to produce a model that predicts exemption VAT codes for each invoice line. Particularly using the IVAm field in the dataset. We pursued several avenues to determine the best model and picked the relevant criteria. We also implemented a user-friendly interface to facilitate easy interactions with the model in dashboard form. 
 
 Given resources: 
-BIP x Tech Presentation
-BIP x Tech - Dataset Description 
-BIP x Tech - Project: IVA
-BIP X Tech - xlsx Dataset
+- BIP x Tech Presentation
+- BIP x Tech - Dataset Description 
+- BIP x Tech - Project: IVA
+- BIP X Tech - xlsx Dataset
 
 # [Section 2] Methods
 
