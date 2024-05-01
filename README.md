@@ -139,7 +139,7 @@ Neural Network: Showed a marked decrease in performance in the reduced feature s
 Random Forest and Decision Tree: Both models performed robustly with reduced features. The Random Forest achieved an accuracy of 97.3%, and the Decision Tree was close with 97.2% accuracy.
 Analysis: The strong performance of the Random Forest and Decision Tree in a reduced feature set suggests their suitability for scenarios where computational efficiency and model simplicity are prioritized. Their ability to maintain high accuracy with fewer inputs also indicates a better fit for practical applications where interpretability and operational efficiency are crucial.
 
-
+![Alt text](images/confusion matrix rf (highlighted).png)
 
 # [Section 5] Conclusions
 
