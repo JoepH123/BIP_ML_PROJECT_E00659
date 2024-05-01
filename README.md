@@ -33,7 +33,7 @@ Columns with a large percentage of missing values (>50%).
 **Note no cases between 2. and 3.**
 
 For columns with no missing value, we **kept** them all to uphold data integrity
-For columns (>5%), imputation is promising. All were categorical data types, and we chose to impute missing values using the mode of each column.
+For columns (>5%), imputation is promising. All were categorical data types, and we chose to impute missing values using the mode of each column. 
 
 
 For columns (>50%), imputation was deemed difficult.
@@ -42,7 +42,7 @@ Does the presence of values in a column with many NaNs provide substantial predi
 Is the column with few NaNs valuable enough to apply a data imputation technique?
 Concluded columns (>50%) to be **eliminated**. 
 
-In our analysis, we identified that six specific columns highlighted in the dataset description were crucial inputs for our model. These columns were perfectly clean, requiring no imputation or adjustments, thus they were used directly in both the full and reduced feature models.
+In our analysis, we identified that six specific columns highlighted in the dataset description were crucial inputs for our model. These columns were perfectly clean, requiring no imputation or adjustments, thus they were used in both the full and reduced feature models. However, we would like to highlight that the columns were transformed into features.
 
 Full Model Approach: For the comprehensive model which utilized all available features, we implemented a rigorous imputation strategy where missing values in columns with significant but manageable missing data (>5% and <50%) were imputed using the mode. This approach was aimed at maximizing the dataset's completeness to enable a detailed exploration of all potential predictive signals.
 
@@ -75,7 +75,8 @@ Models are trained using the same subset of data to ensure a fair comparison. Th
      c) Evaluating using common metrics such as accuracy, precision, recall, and F1-score to gauge each model's effectiveness.
   
 # [Section 3] Experimental Design
-Comparison of a total of 5 models of which three are text-to-vector methods.
+In the following report, we evaluate 5 models and 3 text-to-vector methods, broken down below in 3 separate experiments. 
+
 
 **Experiment 1: Model Performance in High-Dimensional Space**
 Main Purpose - To assess and compare the performance of neural networks (NN) and random forests (RF) in a high-dimensional feature space.
@@ -97,6 +98,7 @@ Benchmark
 English TFIDF used as a primary baseline due to its widespread use and efficacy.
 Italian TFIDF used to determine the impact of language-specific vectorization on model performance.
 Transformer embeddings were included to determine advancements in natural language processing and their effect on the model's ability to understand and classify textual data.
+We utilize both English and Italian due to the dateset provided containing text in both languages. 
 
 Evaluation Metrics
 Accuracy: Measure for how well each text-to-vector method contributed to correct classifications.
@@ -121,7 +123,7 @@ Confusion Matrix: Aids in understanding the areas where each model excels or fai
 **Experiment 1: High-Dimensional Model Performance**
 Neural Network (NN) vs. Random Forest (RF):
 Neural Network: Achieved an accuracy of 98.0% on the test set, demonstrating strong capability in handling high-dimensional data through complex pattern recognition.
-Random Forest: Recorded 97.1% accuracy, slightly lower than the neural network but still effective in managing high-dimensional spaces without extensive preprocessing.
+Random Forest: Recorded 97.5% accuracy, slightly lower than the neural network but still effective in managing high-dimensional spaces without extensive preprocessing.
 Analysis: The slightly higher neural network performance suggests its potential benefits in handling complex, high-dimensional datasets. However, the close performance indicates that both models are robust options for high-dimensional data.
 
 **Experiment 2: Text-to-Vector Transformation Methods**
@@ -134,21 +136,19 @@ Analysis: The lack of significant improvement with advanced text vectorization m
 **Experiment 3: Low-Dimensional Model Comparison**
 Performance in Reduced Feature Context:
 Neural Network: Showed a marked decrease in performance in the reduced feature set, highlighting its dependency on a broader range of data inputs.
-Random Forest and Decision Tree: Both models performed robustly with reduced features. The Random Forest achieved an accuracy of 97.3%, and the Decision Tree was close with 97.0% accuracy.
+Random Forest and Decision Tree: Both models performed robustly with reduced features. The Random Forest achieved an accuracy of 97.3%, and the Decision Tree was close with 97.2% accuracy.
 Analysis: The strong performance of the Random Forest and Decision Tree in a reduced feature set suggests their suitability for scenarios where computational efficiency and model simplicity are prioritized. Their ability to maintain high accuracy with fewer inputs also indicates a better fit for practical applications where interpretability and operational efficiency are crucial.
-
-In Summary: 
-Model Performance:
-
-The experiments underscore the effectiveness of simpler, rule-based models like Decision Trees and Random Forests in various data contexts. In contrast, Neural Networks, while powerful in high-dimensional settings, may not offer substantial advantages in situations where data features are limited or when interpretability and simplicity are required.
-
-Random Forest (RF) models yielded similar results to the Neural Network (NN) when applied to the full feature set.
-When using a reduced feature set, both RF and DT outperformed the NN, suggesting that these models are more robust to feature set reduction.
-The NN's performance dipped more significantly than RF and DT in lower-dimensional spaces, indicating a possible over-reliance on the availability of high-dimensional data. The experiments demonstrated that both RF and DT maintain commendable performance despite a significant reduction in the number of features. This reinforces the notion that these models can effectively capture the underlying patterns in the data with fewer features (utilizing less computational power).
 
 
 
 # [Section 5] Conclusions
+
+The experiments underscore the effectiveness of simpler, rule-based models like Decision Trees and Random Forests in various data contexts. In contrast, Neural Networks, while powerful in high-dimensional settings, may not offer substantial advantages in situations where data features are limited or when interpretability and simplicity are required. Although RF and DT have higher disparities in the first class therefore resulting in a lower F1 score, the other classes are outputted with better correlation while the NN performs inversely. Therefore, accuracy can be the better measure as a comparison. 
+
+Random Forest (RF) models yielded similar results to the Neural Network (NN) when applied to the full feature set.
+When using a reduced feature set, both RF and DT outperformed the NN, suggesting that these models are more robust to feature set reduction.
+The NN's performance dipped more significantly than RF and DT in lower-dimensional spaces, indicating a possible over-reliance on the availability of high-dimensional data. The experiments demonstrated that both RF and DT maintain commendable performance despite significantly reducing the number of features. This reinforces the notion that these models can effectively capture the underlying patterns in the data with fewer features (utilizing less computational power).
+
 Our project concludes the RF and DT models are superior in contexts with fewer features.
 Given the comparable performance between RF and DT, along with the added advantage of simplicity and interpretability, **DT emerges as the preferred model.** The NN model does not demonstrate a clear advantage in the reduced feature space setting, reinforcing the suitability of more traditional, interpretable models for such tasks. The data and task fit better with a rule-based approach because the additional columns used in the dataset allow for creating an accurate model using deterministic rules. Random Forests (RF) and Decision Trees (DT) are inherently more aligned with a rule-based methodology. They function by creating decision rules that split the data based on feature values, which is particularly effective when there's a clear and logical structure to the data that can be captured with such rules. Thus the DT model is concluded to be the best-fit choice model for the task. 
 
