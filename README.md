@@ -8,7 +8,7 @@ Joep Hillenaar E00659
 
 
 # [Section 1] Introduction
-Our project was developed to produce a model that predicts exemption VAT codes for each invoice line. Particularly using the IVAm field in the dataset. We pursued several avenues to determine the best model and picked the relevant criteria. We also implemented a user-friendly interface to facilitate easy interactions with the model in dashboard form. 
+Our project was developed to produce a model that predicts exemption VAT codes for each invoice line. Particularly using the IvaM field in the dataset. We pursued several avenues to determine the best model and picked the relevant criteria explained further in the following report. We also implemented a user-friendly interface to facilitate easy interactions with the model in dashboard form. 
 
 Given resources: 
 - BIP x Tech Presentation
@@ -27,20 +27,27 @@ Given resources:
    d) Combine both into a DataFrame for a cleaner display for simpler analysis
    
 Three categories emerged from this step.
-Columns with no missing values
-Columns with a small percentage of missing values (<5%)
-Columns with a large percentage of missing values (>50%)
+Columns with no missing values.
+Columns with a small percentage of missing values (<5%).
+Columns with a large percentage of missing values (>50%).
 **Note no cases between 2. and 3.**
 
 For columns with no missing value, we **kept** them all to uphold data integrity
-For columns (>5%), imputation is promising. All were categorical data types, and we **imputed** with mode.
+For columns (>5%), imputation is promising. All were categorical data types, and we chose to impute missing values using the mode of each column.
+
+
 For columns (>50%), imputation was deemed difficult.
 Before deletion, we discussed two questions:
 Does the presence of values in a column with many NaNs provide substantial predictive power? (This way we could use empty values)
 Is the column with few NaNs valuable enough to apply a data imputation technique?
 Concluded columns (>50%) to be **eliminated**. 
 
-Qualitatively, we assumed that the (6) columns specifically mentioned in the given dataset description were important inputs and must be utilized in the model. All 6 columns were perfectly clean and required no imputation. For invoice information, Columns Description and Amount (not within the dataset 6) were also determined to be essential, which fall under (>5%) and  no missing values respectively. No further adjustments to be made.
+In our analysis, we identified that six specific columns highlighted in the dataset description were crucial inputs for our model. These columns were perfectly clean, requiring no imputation or adjustments, thus they were used directly in both the full and reduced feature models.
+
+Full Model Approach: For the comprehensive model which utilized all available features, we implemented a rigorous imputation strategy where missing values in columns with significant but manageable missing data (>5% and <50%) were imputed using the mode. This approach was aimed at maximizing the dataset's completeness to enable a detailed exploration of all potential predictive signals.
+
+Reduced Feature Model Approach: In contrast, for the smaller models which focused on a reduced set of features, the imputation techniques were simplified or altogether unnecessary. This was due to the selection of mostly clean columns and those critical for the analysis, which either had no missing values or were not significantly impacted by missing data. In these models, we prioritized simplicity and computational efficiency, eliminating the need for complex data imputation processes found in the full model setup.
+
 
 
 2. **Proposed Idea**
@@ -73,7 +80,7 @@ Comparison of a total of 5 models of which three are text-to-vector methods.
 **Experiment 1: Model Performance in High-Dimensional Space**
 Main Purpose - To assess and compare the performance of neural networks (NN) and random forests (RF) in a high-dimensional feature space.
 
-Baselines
+Benchmark
 The random forest model served as a baseline, known for handling high-dimensional spaces effectively.
 The neural network model was tested against this baseline to determine if its higher complexity provided any significant performance benefit in high-dimensional data.
 
@@ -86,7 +93,7 @@ Confusion Matrix: To gain deeper insights into the type and frequency of classif
 **Experiment 2: Text-to-Vector Transformation Methods**
 Main Purpose - To compare the effectiveness of different text-to-vector transformation methods on model performance.
 
-Baselines
+Benchmark
 English TFIDF used as a primary baseline due to its widespread use and efficacy.
 Italian TFIDF used to determine the impact of language-specific vectorization on model performance.
 Transformer embeddings were included to determine advancements in natural language processing and their effect on the model's ability to understand and classify textual data.
@@ -99,8 +106,8 @@ Confusion Matrix: Same definition as previous experiment
 **Experiment 3: Model Comparison in Low-Dimensional Space**
 Main Purpose - To investigate how neural networks (NN), random forests (RF), and decision trees (DT) perform on a lower-dimensional dataset, and to determine if a simpler model like DT could outperform more complex models.
 
-Baselines
-Random Forest and Decision Tree models were used as baselines due to their simplicity and interpretability.
+Benchmark
+Random Forest and Decision Tree models were used as a benchmark due to their simplicity and interpretability.
 The neural network was evaluated against these baselines to see if the dimensionality reduction affected the more complex model disproportionately.
 
 Evaluation Metrics
@@ -111,15 +118,34 @@ Confusion Matrix: Aids in understanding the areas where each model excels or fai
 
 
 # [Section 4] Results
-Our experiments led to several notable findings:
+**Experiment 1: High-Dimensional Model Performance**
+Neural Network (NN) vs. Random Forest (RF):
+Neural Network: Achieved an accuracy of 98.0% on the test set, demonstrating strong capability in handling high-dimensional data through complex pattern recognition.
+Random Forest: Recorded 97.1% accuracy, slightly lower than the neural network but still effective in managing high-dimensional spaces without extensive preprocessing.
+Analysis: The slightly higher neural network performance suggests its potential benefits in handling complex, high-dimensional datasets. However, the close performance indicates that both models are robust options for high-dimensional data.
 
+**Experiment 2: Text-to-Vector Transformation Methods**
+Impact of Vectorization Techniques:
+English TFIDF: Did not significantly improve model performance, indicating the limited predictive power of the 'DescrizioneRiga' text column in the dataset.
+Italian TFIDF: Similar results to English TFIDF, showing no substantial enhancement in model accuracy.
+Transformer Embeddings: Despite capturing more nuanced meanings of the text, transformer embeddings did not lead to better predictive performance.
+Analysis: The lack of significant improvement with advanced text vectorization methods suggests that the textual content of the 'DescrizioneRiga' column may not hold crucial information for predicting VAT codes. The focus might be better placed on other more predictive features within the dataset.
+
+**Experiment 3: Low-Dimensional Model Comparison**
+Performance in Reduced Feature Context:
+Neural Network: Showed a marked decrease in performance in the reduced feature set, highlighting its dependency on a broader range of data inputs.
+Random Forest and Decision Tree: Both models performed robustly with reduced features. The Random Forest achieved an accuracy of 97.3%, and the Decision Tree was close with 97.0% accuracy.
+Analysis: The strong performance of the Random Forest and Decision Tree in a reduced feature set suggests their suitability for scenarios where computational efficiency and model simplicity are prioritized. Their ability to maintain high accuracy with fewer inputs also indicates a better fit for practical applications where interpretability and operational efficiency are crucial.
+
+In Summary: 
 Model Performance:
-Random Forest (RF) and Decision Tree (DT) models yielded similar results to the Neural Network (NN) when applied to the full feature set.
-When using a reduced feature set, both RF and DT outperformed the NN, suggesting that these models are more robust to feature set reduction.
-The NN's performance dipped more significantly than RF and DT in lower-dimensional spaces, indicating a possible over-reliance on the availability of high-dimensional data.
 
-Feature Reduction:
-The experiments demonstrated that both RF and DT maintain commendable performance despite a significant reduction in the number of features. This reinforces the notion that these models can effectively capture the underlying patterns in the data with fewer features (utilizing less computational power).
+The experiments underscore the effectiveness of simpler, rule-based models like Decision Trees and Random Forests in various data contexts. In contrast, Neural Networks, while powerful in high-dimensional settings, may not offer substantial advantages in situations where data features are limited or when interpretability and simplicity are required.
+
+Random Forest (RF) models yielded similar results to the Neural Network (NN) when applied to the full feature set.
+When using a reduced feature set, both RF and DT outperformed the NN, suggesting that these models are more robust to feature set reduction.
+The NN's performance dipped more significantly than RF and DT in lower-dimensional spaces, indicating a possible over-reliance on the availability of high-dimensional data. The experiments demonstrated that both RF and DT maintain commendable performance despite a significant reduction in the number of features. This reinforces the notion that these models can effectively capture the underlying patterns in the data with fewer features (utilizing less computational power).
+
 
 
 # [Section 5] Conclusions
