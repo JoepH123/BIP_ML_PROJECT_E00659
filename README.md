@@ -1,7 +1,3 @@
-missing: 
-section 2 flow chart
-section 4 placeholder figure
-
 # BIP-ML-project-E00659
 Alysia Yoon E04249
 Joep Hillenaar E00659
