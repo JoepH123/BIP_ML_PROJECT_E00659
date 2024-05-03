@@ -144,7 +144,18 @@ Analysis: The strong performance of the Random Forest and Decision Tree in a red
 
 <img src="images/confusion matrix nn (highlighted).png" width="900" />
 
-The experiments underscore the effectiveness of simpler, rule-based models like DT and RF in various data contexts. In contrast, NNs, while powerful in high-dimensional settings, may not offer substantial advantages in situations where data features are limited or when interpretability and simplicity are required. Although RF and DT have higher disparities in the first class therefore resulting in a lower F1 score, the other classes are outputted with better correlation while the NN performs inversely. Therefore, accuracy can be the better measure as a comparison. 
+
+Drawing from the confusion matrices, both models have strengths and weaknesses depending on the specific classes being predicted. The RF model shows concentrated true positives in several classes, such as class 8, 13, 20, and 31, where the model appears to have a strong capacity to correctly identify these classes. However, it also displays significant misclassifications, particularly for class 1, where a substantial number of instances are incorrectly predicted as other classes, leading to a lower F1 score for this class due to both low precision (many false positives) and low recall (many false negatives).
+
+Conversely, the NN model exhibits a generally more diffuse distribution of true positives across various classes. It notably performs better in classes where RF struggles, such as class 1, achieving higher true positives and fewer false negatives and positives, which implies better precision and recall, and thus a higher F1-score for these classes. This suggests that the NN may have more generalized learning that isn't as tightly fitted to specific classes compared to the RF, at the expense of high accuracy in classes that are easier to predict.
+
+While RF models can perform very well in certain classes they may lack consistency across all classes. This is reflected in the higher disparities in class-specific performance, which could be problematic where uniform performance across categories is crucial.
+
+The NN models, on the other hand, tend to provide a more balanced performance across various classes, which can be beneficial in scenarios where it is crucial to maintain a reasonable level of accuracy and precision across a diverse set of categories. However, this comes at the cost of decreased accuracy observed in RF models for certain specific classes.
+
+between the two choices of prioritizing accuracy or consistency across classes, RF is preferable when high performance in specific known classes is more important, while NN is for when overall balance and generalization across classes are needed. This analysis aligns with the notion that in simpler data contexts where interpretability and simplicity are required, simpler models like DT and RF might be advantageous, but with an acceptance of their limitations in handling all classes effectively.
+
+
 
 ## High Dimensional Models
 
