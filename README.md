@@ -4,7 +4,7 @@ Joep Hillenaar E00659
 
 
 # [Section 1] Introduction
-Our project was developed to produce a model that predicts exemption VAT codes for each invoice line. Particularly using the IvaM field in the dataset. We pursued several avenues to determine the best model and picked the relevant criteria explained further in the following report. We also implemented a user-friendly interface to facilitate easy interactions with the model in dashboard form. 
+Our project was developed to produce a model that predicts exemption VAT codes for each invoice line. This was done by predicting the IvaM field in the dataset while using the other columns in the data. We pursued several avenues to determine the best model and picked the relevant criteria explained further in the following report. We also implemented a user-friendly interface to facilitate easy interactions with the model in dashboard form. 
 
 Given resources: 
 - BIP x Tech Presentation
@@ -12,71 +12,65 @@ Given resources:
 - BIP x Tech - Project: IVA
 - BIP X Tech - xlsx Dataset
 
-Legend:
-Decision Tree (DT)
-Neural Network (NN)
-Random Forest (RF)
+Common terms with their abbreviations:
+- Decision Tree (DT)
+- Neural Network (NN)
+- Random Forest (RF)
 
 # [Section 2] Methods
 
 1. **Dataset Analysis**
+
    Our first step was to perform an initial explorative data analysis (EDA) procedure. We looked for missing values and anomalies to fully grasp the workability of the given dataset. Quantitatively, we were able to determine which columns were imputable and unusable due to the level of NaN's. This was done through:
    
    a) Deleting all rows for which IvaM is missing
    b) Calculating number of NaNs per column
    c) Calculating percentage of NaNs per column
-   d) Combine both into a DataFrame for a cleaner display for simpler analysis
    
-   Three categories emerged from this step.
-   Columns with no missing values.
-   Columns with a small percentage of missing values (<5%).
-   Columns with a large percentage of missing values (>50%).
-   **Note no cases between 2. and 3.**
-
-   For columns with no missing value, we **kept** them all to uphold data integrity
-   For columns (>5%), imputation is promising. All were categorical data types, and we chose to impute missing values using the mode of each column. 
-
-   For columns (>50%), imputation was deemed difficult.
-   Before deletion, we discussed two questions:
-   Does the presence of values in a column with many NaNs provide substantial predictive power? (This way we could use empty values)
-   Is the column with few NaNs valuable enough to apply a data imputation technique?
-   Concluded columns (>50%) to be **eliminated**. 
+   Three categories emerged from this step. The first one was columns with no missing values. We also found columns with a small percentage of missing values (<5%) and columns with a large percentage of missing values (>50%). There were however no columns with between 5 and 50 percent missing values. For columns with no missing value, we kept them all to uphold data integrity. For columns with little missing values, less than 5 percent, imputation is promising. All these columns were categorical data types, and we chose to impute missing values using the mode of each column. For columns with greater numbers of missing values, more than 50 percent, imputation was deemed difficult. Before deletion, we discussed two questions: Does the presence of values in a column with many NaNs provide substantial predictive power? If the answer is yes, we could use the empty values. Is the column with few NaNs valuable enough to apply a data imputation technique? By analyzing these questions for all the columns with more than 50 percent missing, values, we concluded that they could all be dropped. 
    
-   In our analysis, we identified that six specific columns highlighted in the dataset description were crucial inputs for our model. These columns were perfectly clean, requiring no imputation or adjustments, thus they were used in both the full and reduced feature models. However, we would like to highlight that the columns were transformed into features.
+   Before continuing, we want to already make the distinction between the different complexities of models that we train and evaluate within this report. We use both low-dimensional models (reduced model), trained on a refined set of features, and high-dimensional models (full model), trained on the complete set of features for which we had enough non-missing data. The high-dimensional models required the missing value analysis and imputation method described above. The low-dimensional models, however, are based on a set of features for which no elaborate missing value methodology is needed. This set of features does not have a lot of missing values. These features only have to be transformed into features suitable for model input. 
    
-   High Dimensional Model Approach: For the comprehensive model which utilized all available features, we implemented a rigorous imputation strategy where missing values in columns with significant but manageable missing data (>5% and <50%) were imputed using the mode. This approach was aimed at maximizing the dataset's completeness to enable a detailed exploration of all potential predictive signals.
+   High Dimensional Model Approach: For the comprehensive model which utilized all available features, we implemented the imputation technique described above, where missing values in columns with less than 5 percent missing values were imputed using the mode value of this column. This resulted in throwing away only columns with more than 50 percent missing values. This approach was aimed at maximizing the dataset's completeness to enable a detailed exploration of all potential predictive signals.
    
-   Reduced Feature/ (Low Dimensional) Model Approach: In contrast, for the smaller models which focused on a reduced set of features, the imputation techniques were simplified or altogether unnecessary. This was due to the selection of mostly clean columns and those critical for the analysis, which either had no missing values or were not significantly impacted by missing data. In these models, we prioritized simplicity and computational efficiency, eliminating the need for complex data imputation processes found in the full model setup.
-
-
+   Low Dimensional Model Approach: In contrast, for the smaller models which focused on a reduced set of features, the imputation techniques were unnecessary altogether. This was due to the selection of mostly clean columns and those critical for the analysis, which either had no or very few missing values. In these models, we prioritized simplicity and computational efficiency.
 
 2. **Proposed Idea**
-We explore the performance of machine learning models on high-dimensional data. Specifically, we compare the efficacy of a neural network against that of a random forest and a decision tree. The primary challenge addressed is the management of high dimensionality resulting from:
+
+   We explore the performance of machine learning models on high-dimensional and low-dimensional data. Specifically, we compare the efficacy of a neural network approach against that of a random forest approach for high-dimensional data. Furthermore, we compare a neural network to a random forest model and a decision tree for low-dimensional data. These different models brought about different challenges and choices.
+  
+3. **Design Decisions and Algorithm Selection**
+
+   The low-dimensional models did not require much special attention, as their process was quite straightforward. Of course, we had to convert the raw features to model input, by creating dummy variables for categorical features and scaling numerical features. 
+
+   The primary challenge addressed is the management of high dimensionality resulting from:
 
    a) Text vectorization, which transforms textual data into a high-dimensional space.
 
-   b) The creation of dummy variables for categorical features, which significantly increases the feature count with numerous categories.
-  
-4. **Design Decisions and Algorithm Selection**
-Dimensionality Reduction: To manage the high dimensionality, we employ Truncated Singular Value Decomposition (TruncatedSVD). This technique reduces the feature space to a more manageable size while attempting to preserve the variance in the data. This reduction is crucial for improving model training times and avoiding overfitting.
+   b) The creation of dummy variables for categorical features, which significantly increases the feature count with numerous categories. When using all categorical columns, the number of dummy variables goes to very high numbers. 
 
-5. **Model Selection**
-Neural Network: We hypothesized that a neural network, due to its ability to model complex patterns, would be well-suited for high-dimensional data, even after dimensionality reduction.
-Random Forest: Serves as a benchmark due to its robustness and effectiveness in handling numerous features without significant preprocessing. It's also less likely to overfit compared to simpler models.
-Decision Tree: Investigated as a simpler alternative to assess if complexity in model architecture translates to significantly better performance.
+   To address this issue, we used a dimensional reduction method. We employed Truncated Singular Value Decomposition (TruncatedSVD). This technique reduces the feature space to a more manageable size while attempting to preserve the variance in the data. This reduction is crucial for improving model training times and avoiding overfitting.
 
-6. **Training Overview**
-Models are trained using the same subset of data to ensure a fair comparison. The training process for each model involves:
+   Of course, besides the text-to-vector and dummy variable creation combined with dimensionality reduction, the high-dimensional models, also required the numerical columns to be scaled. 
 
-     a) Utilizing a standardized pipeline of preprocessing - including the application of TruncatedSVD - followed by model fitting.
+4. **Model Selection**
+
+   - Neural Network: We hypothesized that a neural network, due to its ability to model complex patterns, would be well-suited for high-dimensional data, even after dimensionality reduction.
+   - Random Forest: Serves as a benchmark due to its robustness and effectiveness in handling numerous features without significant preprocessing. It's also less likely to overfit compared to simpler models.
+   - Decision Tree: Investigated as a simpler alternative to assess if complexity in model architecture translates to significantly better performance, or whether a simple rule-based approach is suitable.
+
+5. **Training Overview**
+
+   Models are trained using the same subset of data to ensure a fair comparison. The training process for each model involves:
+
+     a) Utilizing a standardized pipeline of preprocessing, as described in section `3` above. Splitting the data into train and test data, using an 80-20 percent split.
    
-     b) Tuning hyperparameters specific to each model type to optimize performance.
+     b) Tuning hyperparameters specific to each model type to optimize performance. Most importantly: Number of Epochs (NN), Number of hidden layers (NN), Neuron per hidden layer (NN), Max tree depth (DT and RF), Number of trees (RF)
    
      c) Evaluating using common metrics such as accuracy, precision, recall, and F1-score to gauge each model's effectiveness.
   
 # [Section 3] Experimental Design
 In the following report, we evaluate 5 models and 3 text-to-vector methods, broken down below in 3 separate experiments. 
-
 
 **Experiment 1: Model Performance in High-Dimensional Space**
 Main Purpose - To assess and compare the performance of neural networks (NN) and random forests (RF) in a high-dimensional feature space.
