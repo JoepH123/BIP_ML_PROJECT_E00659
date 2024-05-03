@@ -27,27 +27,26 @@ Random Forest (RF)
    c) Calculating percentage of NaNs per column
    d) Combine both into a DataFrame for a cleaner display for simpler analysis
    
-Three categories emerged from this step.
-Columns with no missing values.
-Columns with a small percentage of missing values (<5%).
-Columns with a large percentage of missing values (>50%).
-**Note no cases between 2. and 3.**
+   Three categories emerged from this step.
+   Columns with no missing values.
+   Columns with a small percentage of missing values (<5%).
+   Columns with a large percentage of missing values (>50%).
+   **Note no cases between 2. and 3.**
 
-For columns with no missing value, we **kept** them all to uphold data integrity
-For columns (>5%), imputation is promising. All were categorical data types, and we chose to impute missing values using the mode of each column. 
+   For columns with no missing value, we **kept** them all to uphold data integrity
+   For columns (>5%), imputation is promising. All were categorical data types, and we chose to impute missing values using the mode of each column. 
 
-
-For columns (>50%), imputation was deemed difficult.
-Before deletion, we discussed two questions:
-Does the presence of values in a column with many NaNs provide substantial predictive power? (This way we could use empty values)
-Is the column with few NaNs valuable enough to apply a data imputation technique?
-Concluded columns (>50%) to be **eliminated**. 
-
-In our analysis, we identified that six specific columns highlighted in the dataset description were crucial inputs for our model. These columns were perfectly clean, requiring no imputation or adjustments, thus they were used in both the full and reduced feature models. However, we would like to highlight that the columns were transformed into features.
-
-High Dimensional Model Approach: For the comprehensive model which utilized all available features, we implemented a rigorous imputation strategy where missing values in columns with significant but manageable missing data (>5% and <50%) were imputed using the mode. This approach was aimed at maximizing the dataset's completeness to enable a detailed exploration of all potential predictive signals.
-
-Reduced Feature/ (Low Dimensional) Model Approach: In contrast, for the smaller models which focused on a reduced set of features, the imputation techniques were simplified or altogether unnecessary. This was due to the selection of mostly clean columns and those critical for the analysis, which either had no missing values or were not significantly impacted by missing data. In these models, we prioritized simplicity and computational efficiency, eliminating the need for complex data imputation processes found in the full model setup.
+   For columns (>50%), imputation was deemed difficult.
+   Before deletion, we discussed two questions:
+   Does the presence of values in a column with many NaNs provide substantial predictive power? (This way we could use empty values)
+   Is the column with few NaNs valuable enough to apply a data imputation technique?
+   Concluded columns (>50%) to be **eliminated**. 
+   
+   In our analysis, we identified that six specific columns highlighted in the dataset description were crucial inputs for our model. These columns were perfectly clean, requiring no imputation or adjustments, thus they were used in both the full and reduced feature models. However, we would like to highlight that the columns were transformed into features.
+   
+   High Dimensional Model Approach: For the comprehensive model which utilized all available features, we implemented a rigorous imputation strategy where missing values in columns with significant but manageable missing data (>5% and <50%) were imputed using the mode. This approach was aimed at maximizing the dataset's completeness to enable a detailed exploration of all potential predictive signals.
+   
+   Reduced Feature/ (Low Dimensional) Model Approach: In contrast, for the smaller models which focused on a reduced set of features, the imputation techniques were simplified or altogether unnecessary. This was due to the selection of mostly clean columns and those critical for the analysis, which either had no missing values or were not significantly impacted by missing data. In these models, we prioritized simplicity and computational efficiency, eliminating the need for complex data imputation processes found in the full model setup.
 
 
 
