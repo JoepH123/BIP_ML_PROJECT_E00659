@@ -162,18 +162,11 @@ The neural network model showed a noticeable decrease in performance in the redu
 | RandomForestClassifier | 0.9725 | 0.7113    | 0.6641  | 0.6789   |
 | DecisionTreeClassifier | 0.9722 | 0.6864    | 0.6689  | 0.6718   |
 
-**Neural Network Performance:**
-The NN models outperform the RF and DT classes in terms of accuracy and F1-score across both high and low-dimensional settings. This suggests that for this particular task, NN may be better suited due to their ability to capture complex patterns.
-
 **High-Dimensional vs Low-Dimensional:**
-The performance of all models slightly decreases when moving from high-dimensional to low-dimensional data. This indicates that reducing the dimensionality removed some useful information beneficial for model accuracy. However, we concluded that this trade-off was acceptable by the reduced number of features which that the dimensionality reduction significantly sped up model training or helped to avoid overfitting.
+The performance of all models slightly decreases when moving from high-dimensional to low-dimensional data. This indicates that reducing the dimensionality removed some useful information beneficial for model accuracy. However, we concluded that this trade-off was acceptable by the reduced number of features which that the dimensionality reduction significantly sped up model training and made the process more explainable.
 
 **Metric Consistency:**
-The NN in the high dimensional setting shows a balanced performance across all metrics (accuracy, precision, recall, and F1-Score), which is a desirable trait in a model, indicating it does not overly favour one class over another or sacrifice precision for recall.
-The RF class performance (especially in precision and recall) suggests that while it is fairly accurate, it may be more conservative in predicting the positive class, leading to fewer false positives but more false negatives.
-
-**DT Classes in Low Dimension:**
-The DT classes, while having comparable accuracy to the RF classes in low dimensions, tend to have slightly lower precision and recall. This might imply it's slightly less effective at correctly classifying the positive class or more prone to overfitting without sufficient regularization.
+The NN in the high dimensional setting shows a balanced performance across all metrics (accuracy, precision, recall, and F1-Score), which is a desirable trait in a model, indicating it does not overly favor one class over another or sacrifice precision for recall. The RF class performance (especially in precision and recall) suggests that the accuracy is very comparable to the NN model. The F1 score is, however, quite significantly lower than the F1 score of the NN. Why this might not be as much of a problem as initially expected is explained in the next section, where we analyze the confusion matrices (`confusion matrix analysis`). 
 
 **Confusion matrix analysis**
 
