@@ -25,9 +25,9 @@ For details on recreating environment, look at ``main.ipynb``
 
    Our first step was to perform an initial explorative data analysis (EDA) procedure. We looked for missing values and anomalies to fully grasp the workability of the given dataset. Quantitatively, we were able to determine which columns were imputable and unusable due to the level of NaN's. This was done through:
    
-         a) Deleting all rows for which IvaM is missing
-         b) Calculating number of NaNs per column
-         c) Calculating percentage of NaNs per column
+      a) Deleting all rows for which IvaM is missing
+      b) Calculating number of NaNs per column
+      c) Calculating percentage of NaNs per column
    
    Three categories emerged from this step. The first one was columns with no missing values. We also found columns with a small percentage of missing values (<5%) and columns with a large percentage of missing values (>50%). There were however no columns with between 5 and 50 percent missing values. For columns with no missing value, we kept them all to uphold data integrity. For columns with little missing values, less than 5 percent, imputation is promising. All these columns were categorical data types, and we chose to impute missing values using the mode of each column. For columns with greater numbers of missing values, more than 50 percent, imputation was deemed difficult. Before deletion, we discussed two questions: Does the presence of values in a column with many NaNs provide substantial predictive power? If the answer is yes, we could use the empty values. Is the column with few NaNs valuable enough to apply a data imputation technique? By analyzing these questions for all the columns with more than 50 percent missing, values, we concluded that they could all be dropped. 
    
