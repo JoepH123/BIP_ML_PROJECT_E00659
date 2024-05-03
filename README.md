@@ -72,10 +72,12 @@ For details on recreating environment, look at ``main.ipynb``
      c) Evaluating using common metrics such as accuracy, precision, recall, and F1-score to gauge each model's effectiveness.
   
 # [Section 3] Experimental Design
+
 In this report, we evaluate 5 models and 3 text-to-vector methods, broken down below in 3 separate experiments. 
 
 **Experiment 1: Model Performance in High-Dimensional Space**
-Main Purpose - To assess and compare the performance of neural networks (NN) and random forests (RF) in a high-dimensional feature space.
+
+`Main Purpose` - To assess and compare the performance of neural networks (NN) and random forests (RF) in a high-dimensional feature space.
 
 Benchmark
 - The random forest model served as a baseline, known for handling high-dimensional spaces effectively.
@@ -88,7 +90,8 @@ Evaluation Metrics
 - Confusion Matrix: To gain deeper insights into the type and frequency of classification errors each model makes.
 
 **Experiment 2: Text-to-Vector Transformation Methods**
-- Main Purpose - To compare the effectiveness of different text-to-vector transformation methods on model performance.
+
+`Main Purpose` - To compare the effectiveness of different text-to-vector transformation methods on model performance.
 
 Benchmark
 - TF-IDF (= Term Frequency - Inverse Document Frequency) with an English WordLemmatizer (English TF-IDF) used as a primary baseline due to its widespread use and efficacy.
@@ -99,11 +102,11 @@ We utilize both English and Italian due to the dateset provided containing text 
 
 Evaluation Metrics
 - Accuracy: Measure for how well each text-to-vector method contributed to correct classifications.
-- F1 Score: Same definition as previous experiment
 - Confusion Matrix: Same definition as previous experiment
 
 **Experiment 3: Model Comparison in Low-Dimensional Space**
-Main Purpose - To investigate how neural networks (NN), random forests (RF), and decision trees (DT) perform on a lower-dimensional dataset, and to determine if a simpler model like DT could outperform more complex models.
+
+`Main Purpose` - To investigate how neural networks (NN), random forests (RF), and decision trees (DT) perform on a lower-dimensional dataset, and to determine if a simpler model like DT could outperform more complex models.
 
 Benchmark
 - Random Forest and Decision Tree models were used as a benchmark due to their simplicity and interpretability.
@@ -126,35 +129,15 @@ The slightly higher neural network performance suggests its potential benefits i
 
 **Experiment 2: Text-to-Vector Transformation Methods**
 
-Impact of Vectorization Techniques:
+Impact of word-to-vector methods:
 
-English TF-IDF: Did not significantly improve model performance, indicating the limited predictive power of the 'DescrizioneRiga' text column in the dataset.
-Italian TF-IDF: Similar results to English TFIDF, showing no substantial enhancement in model accuracy.
-Transformer Embeddings: Despite being designed to capture more nuanced meanings of the text, transformer embeddings did not lead to better predictive performance.
-Analysis: The lack of significant improvement with advanced text vectorization methods suggests that the textual content of the 'DescrizioneRiga' column may not hold crucial information for predicting VAT codes. The focus might be better placed on other more predictive features within the dataset.
+English TF-IDF did not significantly improve model performance, indicating the limited predictive power of the 'DescrizioneRiga' text column in the dataset. Italian TF-IDF, obtained similar results to English TFIDF, showing no substantial enhancement in model accuracy. The transformer embedding, despite being designed to capture more nuanced meanings of the text, did not lead to better predictive performance. This lack of significant improvement with advanced text vectorization methods suggests that the textual content of the 'DescrizioneRiga' column may not hold crucial information for predicting VAT codes. The focus might be better placed on other more predictive features within the dataset.
 
 **Experiment 3: Low-Dimensional Model Comparison**
 
 Performance in Reduced Feature Context:
 
-Neural Network: Showed a marked decrease in performance in the reduced feature set, highlighting its dependency on a broader range of data inputs.
-Random Forest and Decision Tree: Both models performed robustly with reduced features. The Random Forest achieved an accuracy of 97.3%, and the Decision Tree was close with 97.2% accuracy.
-Analysis: The strong performance of the Random Forest and Decision Tree in a reduced feature set suggests their suitability for scenarios where computational efficiency and model simplicity are prioritized. Their ability to maintain high accuracy with fewer inputs also indicates a better fit for practical applications where interpretability and operational efficiency are crucial. 
-
-<img src="images/confusion matrix rf (highlighted).png" width="900" />
-
-<img src="images/confusion matrix nn (highlighted).png" width="900" />
-
-
-Drawing from the confusion matrices, both models have strengths and weaknesses depending on the specific classes being predicted. The RF model shows concentrated true positives in several classes, such as class 8, 13, 20, and 31, where the model appears to have a strong capacity to correctly identify these classes. However, it also displays significant misclassifications, particularly for class 1, where a substantial number of instances are incorrectly predicted as other classes, leading to a lower F1 score for this class due to both low precision (many false positives) and low recall (many false negatives).
-
-Conversely, the NN model exhibits a generally more diffuse distribution of true positives across various classes. It notably performs better in classes where RF struggles, such as class 1, achieving higher true positives and fewer false negatives and positives, which implies better precision and recall, and thus a higher F1-score for these classes. This suggests that the NN may have more generalized learning that isn't as tightly fitted to specific classes compared to the RF, at the expense of high accuracy in classes that are easier to predict.
-
-While RF models can perform very well in certain classes they may lack consistency across all classes. This is reflected in the higher disparities in class-specific performance, which could be problematic where uniform performance across categories is crucial.
-
-The NN models, on the other hand, tend to provide a more balanced performance across various classes, which can be beneficial in scenarios where it is crucial to maintain a reasonable level of accuracy and precision across a diverse set of categories. However, this comes at the cost of decreased accuracy observed in RF models for certain specific classes.
-
-between the two choices of prioritizing accuracy or consistency across classes, RF is preferable when high performance in specific known classes is more important, while NN is for when overall balance and generalization across classes are needed. This analysis aligns with the notion that in simpler data contexts where interpretability and simplicity are required, simpler models like DT and RF might be advantageous, but with an acceptance of their limitations in handling all classes effectively.
+The neural network model showed a noticeable decrease in performance in the reduced feature set, going from 98.0% in the high-dimensional model to 95.7% in the low-dimensional model, highlighting its dependency on a broader range of data inputs. The random forest and decision tree, however, performed robustly with the reduced set of features. The random forest model achieved an accuracy of 97.3%, and the Decision Tree was close with 97.2% accuracy. The strong performance of the random forest and decision tree in a reduced feature set suggests their suitability for scenarios where computational efficiency and model simplicity are prioritized. Their ability to maintain high accuracy with fewer inputs also indicates a better fit for practical applications where interpretability and operational efficiency are crucial. 
 
 ## High Dimensional Models
 
@@ -162,6 +145,14 @@ between the two choices of prioritizing accuracy or consistency across classes, 
 |----------------------|----------|-----------|---------|----------|
 | Neural Network       | 0.9803   | 0.8691    | 0.8494  | 0.8545   |
 | RandomForestClassifier | 0.9750 | 0.7172    | 0.6643  | 0.6864   |
+
+## Text-to-Vector Models
+
+| Model                 | Accuracy |
+|-----------------------|----------|
+| English TF-IDF        | 0.886    |
+| Italian TF-IDF        | 0.876    |
+| Transformer embedding | 0.872    |
 
 ## Low Dimensional Models
 
@@ -174,10 +165,8 @@ between the two choices of prioritizing accuracy or consistency across classes, 
 **Neural Network Performance:**
 The NN models outperform the RF and DT classes in terms of accuracy and F1-score across both high and low-dimensional settings. This suggests that for this particular task, NN may be better suited due to their ability to capture complex patterns.
 
-
 **High-Dimensional vs Low-Dimensional:**
 The performance of all models slightly decreases when moving from high-dimensional to low-dimensional data. This indicates that reducing the dimensionality removed some useful information beneficial for model accuracy. However, we concluded that this trade-off was acceptable by the reduced number of features which that the dimensionality reduction significantly sped up model training or helped to avoid overfitting.
-
 
 **Metric Consistency:**
 The NN in the high dimensional setting shows a balanced performance across all metrics (accuracy, precision, recall, and F1-Score), which is a desirable trait in a model, indicating it does not overly favour one class over another or sacrifice precision for recall.
@@ -186,8 +175,20 @@ The RF class performance (especially in precision and recall) suggests that whil
 **DT Classes in Low Dimension:**
 The DT classes, while having comparable accuracy to the RF classes in low dimensions, tend to have slightly lower precision and recall. This might imply it's slightly less effective at correctly classifying the positive class or more prone to overfitting without sufficient regularization.
 
+**Confusion matrix analysis**
+
+<img src="images/confusion matrix rf (highlighted).png" width="900" />
+
+<img src="images/confusion matrix nn (highlighted).png" width="900" />
+
+Drawing from the confusion matrices, both models have strengths and weaknesses depending on the specific classes being predicted. The RF model shows many concentrated true positives in several classes over the diagonal of the confusion matrix, indicating a strong capacity to correctly identify these classes. Compared to the confusion matrix of the neural network, there are however, also more zeros on the diagonal indicating classes that were never predicted correctly. Besides, it also displays significant misclassifications, particularly for class 0, where a substantial number of instances are incorrectly predicted as this class whereas this class only contains 3 actual cases. The fact that this one class, in particular, is so problematic, leads to a lower F1 score for this class due to both low precision (many false positives) and low recall (many false negatives).
+
+The confusion matrix of the neural network also shows a strong diagonal line with high values indicating many correctly classified test cases. It also has fewer zeros on the diagonal indicating that the model can predict more different classes. In contrast to the Random Forest model, it notably performs better in the main class where RF struggles, such as class 0, achieving higher true positives and fewer false negatives and positives, which implies better precision and recall, and thus a higher F1-score for these classes. This suggests that the NN may have more generalized learning that isn't as tightly fitted to specific classes compared to the RF, at the expense of high accuracy in classes that are easier to predict. This explanation could intuitively make sense from the perspective that random forest models create many rule-based trees. These rules are quite harsh and could cause problems in certain questionable (or edge) cases. Overall, bad performance in one class specifically has a bigger impact on the F1 score than more distributed mistakes in different classes. 
+
+While RF models can perform very well in certain classes they may lack consistency across all classes. This is reflected in the higher disparities in class-specific performance, which could be problematic where uniform performance across categories is crucial. The NN models, on the other hand, tend to provide a more balanced performance across various classes, which can be beneficial in scenarios where it is crucial to maintain a reasonable level of accuracy and precision across a diverse set of categories. However, this comes at the cost of decreased accuracy observed in RF models for certain specific classes. Between the two choices of prioritizing accuracy or consistency across classes, RF is preferable when high performance in specific known classes is more important, while NN is for when overall balance and generalization across classes are needed. This analysis aligns with the notion that in simpler data contexts where interpretability and simplicity are required, simpler models like DT and RF might be advantageous, but with an acceptance of their limitations in handling all classes effectively. A last note on the difference between the confusion matrices is that knowing that RF performs worse on specific classes, can help a human supervisor of the model, and assist the model in its weaknesses. This can be very beneficial in situations where the model is used mostly as a tool for a human. If you were to remove this problematic class, the accuracy of the other classes would become even higher, making the human supported by AI even more effective. 
+
 **Future Work: Potential for Model Optimization:**
-Given that RF and DT models have lower precision and recall compared to the NN, there could be room for parameter tuning or further feature engineering to enhance these metrics.
+Given that RF and DT models have lower precision and recall compared to the NN, there could be room for improvement by finding out why certain classes are problematic for these models. This could be done through parameter tuning or further feature engineering.
 
 # [Section 5] Conclusions
 
