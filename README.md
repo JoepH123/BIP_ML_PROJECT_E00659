@@ -19,13 +19,15 @@ Common terms with their abbreviations:
 
 # [Section 2] Methods
 
+For details on recreating environment, look at ``main.ipynb``
+
 1. **Dataset Analysis**
 
    Our first step was to perform an initial explorative data analysis (EDA) procedure. We looked for missing values and anomalies to fully grasp the workability of the given dataset. Quantitatively, we were able to determine which columns were imputable and unusable due to the level of NaN's. This was done through:
    
-   a) Deleting all rows for which IvaM is missing
-   b) Calculating number of NaNs per column
-   c) Calculating percentage of NaNs per column
+      a) Deleting all rows for which IvaM is missing
+      b) Calculating number of NaNs per column
+      c) Calculating percentage of NaNs per column
    
    Three categories emerged from this step. The first one was columns with no missing values. We also found columns with a small percentage of missing values (<5%) and columns with a large percentage of missing values (>50%). There were however no columns with between 5 and 50 percent missing values. For columns with no missing value, we kept them all to uphold data integrity. For columns with little missing values, less than 5 percent, imputation is promising. All these columns were categorical data types, and we chose to impute missing values using the mode of each column. For columns with greater numbers of missing values, more than 50 percent, imputation was deemed difficult. Before deletion, we discussed two questions: Does the presence of values in a column with many NaNs provide substantial predictive power? If the answer is yes, we could use the empty values. Is the column with few NaNs valuable enough to apply a data imputation technique? By analyzing these questions for all the columns with more than 50 percent missing, values, we concluded that they could all be dropped. 
    
@@ -70,65 +72,71 @@ Common terms with their abbreviations:
      c) Evaluating using common metrics such as accuracy, precision, recall, and F1-score to gauge each model's effectiveness.
   
 # [Section 3] Experimental Design
-In the following report, we evaluate 5 models and 3 text-to-vector methods, broken down below in 3 separate experiments. 
+In this report, we evaluate 5 models and 3 text-to-vector methods, broken down below in 3 separate experiments. 
 
 **Experiment 1: Model Performance in High-Dimensional Space**
 Main Purpose - To assess and compare the performance of neural networks (NN) and random forests (RF) in a high-dimensional feature space.
 
 Benchmark
-The random forest model served as a baseline, known for handling high-dimensional spaces effectively.
-The neural network model was tested against this baseline to determine if its higher complexity provided any significant performance benefit in high-dimensional data.
+- The random forest model served as a baseline, known for handling high-dimensional spaces effectively.
+- The neural network model was tested against this baseline to determine if its higher complexity provided any significant performance benefit in high-dimensional data.
 
 Evaluation Metrics
-Accuracy: Indicates the overall rate of correct predictions made by the model.
-F1 Score: a single measure that combines precision and recall. Useful when you have classes of different sizes and you want to ensure your model is both accurate and doesn't miss a significant number of instances. 
-Precision and Recall: Additional metrics were considered to understand the trade-offs each model makes between false positives and false negatives.
-Confusion Matrix: To gain deeper insights into the type and frequency of classification errors each model makes.
+- Accuracy: Indicates the overall rate of correct predictions made by the model.
+- F1 Score: a single measure that combines precision and recall. Useful when you have classes of different sizes and you want to ensure your model is both accurate and doesn't miss a significant number of instances. 
+- Precision and Recall: Additional metrics were considered to understand the trade-offs each model makes between false positives and false negatives.
+- Confusion Matrix: To gain deeper insights into the type and frequency of classification errors each model makes.
 
 **Experiment 2: Text-to-Vector Transformation Methods**
-Main Purpose - To compare the effectiveness of different text-to-vector transformation methods on model performance.
+- Main Purpose - To compare the effectiveness of different text-to-vector transformation methods on model performance.
 
 Benchmark
-English TFIDF with an English WordLemmatizer used as a primary baseline due to its widespread use and efficacy.
-Italian TFIDF used to determine the impact of language-specific vectorization on model performance.
-Transformer embeddings were included to determine advancements in natural language processing and their effect on the model's ability to understand and classify textual data despite the dataset's bilingual text columns. 
+- TF-IDF (= Term Frequency - Inverse Document Frequency) with an English WordLemmatizer (English TF-IDF) used as a primary baseline due to its widespread use and efficacy.
+- TF-IDF with an English WordLemmatizer (Italian TF-IDF) used to determine the impact of language-specific vectorization on model performance.
+- Transformer embeddings were included to determine advancements in natural language processing and their effect on the model's ability to understand and classify textual data despite the dataset's bilingual text columns. 
+
 We utilize both English and Italian due to the dateset provided containing text in both languages. 
 
 Evaluation Metrics
-Accuracy: Measure for how well each text-to-vector method contributed to correct classifications.
-F1 Score: Same definition as previous experiment
-Confusion Matrix: Same definition as previous experiment
+- Accuracy: Measure for how well each text-to-vector method contributed to correct classifications.
+- F1 Score: Same definition as previous experiment
+- Confusion Matrix: Same definition as previous experiment
 
 **Experiment 3: Model Comparison in Low-Dimensional Space**
 Main Purpose - To investigate how neural networks (NN), random forests (RF), and decision trees (DT) perform on a lower-dimensional dataset, and to determine if a simpler model like DT could outperform more complex models.
 
 Benchmark
-Random Forest and Decision Tree models were used as a benchmark due to their simplicity and interpretability.
-The neural network was evaluated against these baselines to see if the dimensionality reduction affected the more complex model disproportionately.
+- Random Forest and Decision Tree models were used as a benchmark due to their simplicity and interpretability.
+- The neural network was evaluated against these baselines to see if the dimensionality reduction affected the more complex model disproportionately.
 
 Evaluation Metrics
-Accuracy: Provides a general sense of model performance with reduced feature sets.
-F1 Score: Helps evaluate the precision-recall balance in a more condensed feature space.
-Precision and Recall: How often the model is right when it predicts something and how good it is at catching what it should. This is useful when fewer features change the way the model acts.
-Confusion Matrix: Aids in understanding the areas where each model excels or fails, to guide future feature selection.
-
+- Accuracy: Provides a general sense of model performance with reduced feature sets.
+- F1 Score: Helps evaluate the precision-recall balance in a more condensed feature space.
+- Precision and Recall: How often the model is right when it predicts something and how good it is at catching what it should. This is useful when fewer features change the way the model acts.
+- Confusion Matrix: Aids in understanding the areas where each model excels or fails, to guide future feature selection.
 
 # [Section 4] Results
 **Experiment 1: High-Dimensional Model Performance**
+
 Neural Network (NN) vs. Random Forest (RF):
-Neural Network: Achieved an accuracy of 98.0% on the test set, demonstrating strong capability in handling high-dimensional data through complex pattern recognition.
-Random Forest: Recorded 97.5% accuracy, slightly lower than the neural network but still effective in managing high-dimensional spaces without extensive preprocessing.
-Analysis: The slightly higher neural network performance suggests its potential benefits in handling complex, high-dimensional datasets. However, the close performance indicates that both models are robust options for high-dimensional data.
+
+The Neural Network model achieved an accuracy of 98.0% on the test set, demonstrating strong capability in handling high-dimensional data through complex pattern recognition.
+The Random Forest model obtained 97.5% accuracy, slightly lower than the neural network but still effective in managing high-dimensional spaces without extensive preprocessing.
+The slightly higher neural network performance suggests its potential benefits in handling complex, high-dimensional datasets. However, the close performance indicates that both models are robust options for high-dimensional data.
 
 **Experiment 2: Text-to-Vector Transformation Methods**
+
 Impact of Vectorization Techniques:
-English TFIDF: Did not significantly improve model performance, indicating the limited predictive power of the 'DescrizioneRiga' text column in the dataset.
-Italian TFIDF: Similar results to English TFIDF, showing no substantial enhancement in model accuracy.
-Transformer Embeddings: Despite capturing more nuanced meanings of the text, transformer embeddings did not lead to better predictive performance.
+
+English TF-IDF: Did not significantly improve model performance, indicating the limited predictive power of the 'DescrizioneRiga' text column in the dataset.
+Italian TF-IDF: Similar results to English TFIDF, showing no substantial enhancement in model accuracy.
+Transformer Embeddings: Despite being designed to capture more nuanced meanings of the text, transformer embeddings did not lead to better predictive performance.
 Analysis: The lack of significant improvement with advanced text vectorization methods suggests that the textual content of the 'DescrizioneRiga' column may not hold crucial information for predicting VAT codes. The focus might be better placed on other more predictive features within the dataset.
 
 **Experiment 3: Low-Dimensional Model Comparison**
+
 Performance in Reduced Feature Context:
+
 Neural Network: Showed a marked decrease in performance in the reduced feature set, highlighting its dependency on a broader range of data inputs.
 Random Forest and Decision Tree: Both models performed robustly with reduced features. The Random Forest achieved an accuracy of 97.3%, and the Decision Tree was close with 97.2% accuracy.
 Analysis: The strong performance of the Random Forest and Decision Tree in a reduced feature set suggests their suitability for scenarios where computational efficiency and model simplicity are prioritized. Their ability to maintain high accuracy with fewer inputs also indicates a better fit for practical applications where interpretability and operational efficiency are crucial. 
@@ -147,8 +155,6 @@ While RF models can perform very well in certain classes they may lack consisten
 The NN models, on the other hand, tend to provide a more balanced performance across various classes, which can be beneficial in scenarios where it is crucial to maintain a reasonable level of accuracy and precision across a diverse set of categories. However, this comes at the cost of decreased accuracy observed in RF models for certain specific classes.
 
 between the two choices of prioritizing accuracy or consistency across classes, RF is preferable when high performance in specific known classes is more important, while NN is for when overall balance and generalization across classes are needed. This analysis aligns with the notion that in simpler data contexts where interpretability and simplicity are required, simpler models like DT and RF might be advantageous, but with an acceptance of their limitations in handling all classes effectively.
-
-
 
 ## High Dimensional Models
 
