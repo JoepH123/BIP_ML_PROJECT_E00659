@@ -16,6 +16,11 @@ Given resources:
 - BIP x Tech - Project: IVA
 - BIP X Tech - xlsx Dataset
 
+Legend:
+Decision Tree (DT)
+Neural Network (NN)
+Random Forest (RF)
+
 # [Section 2] Methods
 
 1. **Dataset Analysis**
@@ -44,9 +49,9 @@ Concluded columns (>50%) to be **eliminated**.
 
 In our analysis, we identified that six specific columns highlighted in the dataset description were crucial inputs for our model. These columns were perfectly clean, requiring no imputation or adjustments, thus they were used in both the full and reduced feature models. However, we would like to highlight that the columns were transformed into features.
 
-Full Model Approach: For the comprehensive model which utilized all available features, we implemented a rigorous imputation strategy where missing values in columns with significant but manageable missing data (>5% and <50%) were imputed using the mode. This approach was aimed at maximizing the dataset's completeness to enable a detailed exploration of all potential predictive signals.
+High Dimensional Model Approach: For the comprehensive model which utilized all available features, we implemented a rigorous imputation strategy where missing values in columns with significant but manageable missing data (>5% and <50%) were imputed using the mode. This approach was aimed at maximizing the dataset's completeness to enable a detailed exploration of all potential predictive signals.
 
-Reduced Feature Model Approach: In contrast, for the smaller models which focused on a reduced set of features, the imputation techniques were simplified or altogether unnecessary. This was due to the selection of mostly clean columns and those critical for the analysis, which either had no missing values or were not significantly impacted by missing data. In these models, we prioritized simplicity and computational efficiency, eliminating the need for complex data imputation processes found in the full model setup.
+Reduced Feature/ (Low Dimensional) Model Approach: In contrast, for the smaller models which focused on a reduced set of features, the imputation techniques were simplified or altogether unnecessary. This was due to the selection of mostly clean columns and those critical for the analysis, which either had no missing values or were not significantly impacted by missing data. In these models, we prioritized simplicity and computational efficiency, eliminating the need for complex data imputation processes found in the full model setup.
 
 
 
@@ -137,20 +142,51 @@ Analysis: The lack of significant improvement with advanced text vectorization m
 Performance in Reduced Feature Context:
 Neural Network: Showed a marked decrease in performance in the reduced feature set, highlighting its dependency on a broader range of data inputs.
 Random Forest and Decision Tree: Both models performed robustly with reduced features. The Random Forest achieved an accuracy of 97.3%, and the Decision Tree was close with 97.2% accuracy.
-Analysis: The strong performance of the Random Forest and Decision Tree in a reduced feature set suggests their suitability for scenarios where computational efficiency and model simplicity are prioritized. Their ability to maintain high accuracy with fewer inputs also indicates a better fit for practical applications where interpretability and operational efficiency are crucial.
+Analysis: The strong performance of the Random Forest and Decision Tree in a reduced feature set suggests their suitability for scenarios where computational efficiency and model simplicity are prioritized. Their ability to maintain high accuracy with fewer inputs also indicates a better fit for practical applications where interpretability and operational efficiency are crucial. 
 
 <img src="images/confusion matrix rf (highlighted).png" width="900" />
 
 <img src="images/confusion matrix nn (highlighted).png" width="900" />
 
+The experiments underscore the effectiveness of simpler, rule-based models like DT and RF in various data contexts. In contrast, NNs, while powerful in high-dimensional settings, may not offer substantial advantages in situations where data features are limited or when interpretability and simplicity are required. Although RF and DT have higher disparities in the first class therefore resulting in a lower F1 score, the other classes are outputted with better correlation while the NN performs inversely. Therefore, accuracy can be the better measure as a comparison. 
+
+## High Dimensional Models
+
+| Model                | Accuracy | Precision | Recall  | F1-Score |
+|----------------------|----------|-----------|---------|----------|
+| Neural Network       | 0.9803   | 0.8691    | 0.8494  | 0.8545   |
+| RandomForestClassifier | 0.9750 | 0.7172    | 0.6643  | 0.6864   |
+
+## Low Dimensional Models
+
+| Model                | Accuracy | Precision | Recall  | F1-Score |
+|----------------------|----------|-----------|---------|----------|
+| Neural Network       | 0.9572   | 0.7030    | 0.7067  | 0.7003   |
+| RandomForestClassifier | 0.9725 | 0.7113    | 0.6641  | 0.6789   |
+| DecisionTreeClassifier | 0.9722 | 0.6864    | 0.6689  | 0.6718   |
+
+**Neural Network Performance:**
+The NN models outperform the RF and DT classes in terms of accuracy and F1-score across both high and low-dimensional settings. This suggests that for this particular task, NN may be better suited due to their ability to capture complex patterns.
+
+
+**High-Dimensional vs Low-Dimensional:**
+The performance of all models slightly decreases when moving from high-dimensional to low-dimensional data. This indicates that reducing the dimensionality removed some useful information beneficial for model accuracy. However, we concluded that this trade-off was acceptable by the reduced number of features which that the dimensionality reduction significantly sped up model training or helped to avoid overfitting.
+
+
+**Metric Consistency:**
+The NN in the high dimensional setting shows a balanced performance across all metrics (accuracy, precision, recall, and F1-Score), which is a desirable trait in a model, indicating it does not overly favour one class over another or sacrifice precision for recall.
+The RF class performance (especially in precision and recall) suggests that while it is fairly accurate, it may be more conservative in predicting the positive class, leading to fewer false positives but more false negatives.
+
+**DT Classes in Low Dimension:**
+The DT classes, while having comparable accuracy to the RF classes in low dimensions, tend to have slightly lower precision and recall. This might imply it's slightly less effective at correctly classifying the positive class or more prone to overfitting without sufficient regularization.
+
+**Future Work: Potential for Model Optimization:**
+Given that RF and DT models have lower precision and recall compared to the NN, there could be room for parameter tuning or further feature engineering to enhance these metrics.
+
 # [Section 5] Conclusions
 
-The experiments underscore the effectiveness of simpler, rule-based models like Decision Trees and Random Forests in various data contexts. In contrast, Neural Networks, while powerful in high-dimensional settings, may not offer substantial advantages in situations where data features are limited or when interpretability and simplicity are required. Although RF and DT have higher disparities in the first class therefore resulting in a lower F1 score, the other classes are outputted with better correlation while the NN performs inversely. Therefore, accuracy can be the better measure as a comparison. 
-
-Random Forest (RF) models yielded similar results to the Neural Network (NN) when applied to the full feature set.
-When using a reduced feature set, both RF and DT outperformed the NN, suggesting that these models are more robust to feature set reduction.
-The NN's performance dipped more significantly than RF and DT in lower-dimensional spaces, indicating a possible over-reliance on the availability of high-dimensional data. The experiments demonstrated that both RF and DT maintain commendable performance despite significantly reducing the number of features. This reinforces the notion that these models can effectively capture the underlying patterns in the data with fewer features (utilizing less computational power).
+RF models yielded similar results to the NN when applied to the full feature set. When using a reduced feature set, both RF and DT outperformed the NN, suggesting that these models are more robust to feature set reduction. The NN's performance dipped more significantly than RF and DT in lower-dimensional spaces, indicating a possible over-reliance on the availability of high-dimensional data. The experiments demonstrated that both RF and DT maintain commendable performance despite significantly reducing the number of features. This reinforces the notion that these models can effectively capture the underlying patterns in the data with fewer features (utilizing less computational power).
 
 Our project concludes the RF and DT models are superior in contexts with fewer features.
 
-Given the comparable performance between RF and DT, along with the added advantage of simplicity and interpretability, **DT emerges as the preferred model.** Weighing the computational power to perform the calculation with the measurements discussed previously, the DT  has the added advantage of simplicity and interprebility. The NN model does not demonstrate a clear advantage in the reduced feature space setting, reinforcing the suitability of more traditional, interpretable models for such tasks. The data and task fit better with a rule-based approach because the additional columns used in the dataset allow for creating an accurate model using deterministic rules. Random Forests (RF) and Decision Trees (DT) are inherently more aligned with a rule-based methodology. They function by creating decision rules that split the data based on feature values, which is particularly effective when there's a clear and logical structure to the data that can be captured with such rules. Thus the DT model is concluded to be the best-fit choice model for the task. 
+Given the comparable performance between RF and DT, along with the added advantage of simplicity and interpretability, **DT emerges as the preferred model.** Weighing the computational power to perform the calculation with the measurements discussed previously, the DT  has the added advantage of simplicity and interpretability. The NN model does not demonstrate a clear advantage in the reduced feature space setting, reinforcing the suitability of more traditional, interpretable models for such tasks. The data and task fit better with a rule-based approach because the additional columns used in the dataset allow for creating an accurate model using deterministic rules. Random Forests (RF) and Decision Trees (DT) are more aligned with a rule-based methodology. They function by creating decision rules that split the data based on feature values, which is particularly effective when there's a clear and logical structure to the data. Therefore the DT model is concluded to be the best-fit choice model for the task. 
